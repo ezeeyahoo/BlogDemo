@@ -1,0 +1,76 @@
+syntax = "proto3";
+
+option go_package="github.com/ezeeyahoo/demoBlogServiceInGrpc/proto";
+
+package blog_service;
+
+service BlogServicer {
+
+    // Create Post
+    // Input: Post details (Title, Content, Author, Publication Date, Tags)
+    // Output: The Post (PostID, Title, Content, Author, Publication Date, Tags). Error message, if creation fails.
+    rpc CreatePost (CreateRequest) returns (CreateResponse);
+    
+    // Read Post
+    // Input: PostID of the post to retrieve
+    // Output: Post details (PostID, Title, Content, Author, Publication Date, Tags) or an error message if the post is not found.
+    rpc GetPost (GetRequest) returns (GetResponse);
+    
+    // Update Post
+    // Input: PostID of the post to update and new details (Title, Content, Author, Tags)
+    // Output: Post details (PostID, Title, Content, Author, Publication Date, Tags) or error message if the update failed
+    rpc UpdatePost (UpdateRequest) returns (UpdateResponse);
+    
+    // Delete Post
+    // Input: PostID of the post to delete
+    // Output: Success/Failure message
+    rpc DeletePost (DeleteRequest) returns (DeleteResponse);
+
+}
+
+
+message BlogEntryPost {
+    string Title = 1;
+    string Content = 2;
+    string Author = 3;
+    string PubDate = 4;
+    repeated string Tags = 5;
+}
+
+message CreateRequest {
+    BlogEntryPost BlogEntry = 2;
+}
+
+message GetRequest {
+    string PostID = 1;
+}
+
+message UpdateRequest {
+    string PostID = 1;
+    BlogEntryPost BlogEntry = 2;
+}
+
+message DeleteRequest {
+    string PostID = 1;
+}
+
+message CreateResponse {
+    string PostID = 2;
+    BlogEntryPost BlogEntry = 3;
+}
+
+message GetResponse {
+    string PostID = 2;
+    BlogEntryPost BlogEntry = 3;
+}
+
+message UpdateResponse {
+    string PostID = 2;
+    BlogEntryPost BlogEntry = 3;
+}
+
+message DeleteResponse {
+    string Msg = 1;
+}
+
+
