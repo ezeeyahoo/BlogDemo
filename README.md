@@ -1,17 +1,18 @@
-# BlogDemo
+## BlogDemo
 A grpc implementation of blog CRUD APIs
 
-# Test
+## Steps
 ## Start the grpc server
 ### Run from project root folder
+> go mod tidy
 > go run server/main.go
 
 
-## run client tests
-### Run from project root folder
+### Run client tests
+#### Run from project root folder
 > go test -v client/main_test.go
 
-### Server Logs
+#### Server Logs
 ```
 2024/04/13 01:23:58 starting the server at: [::]:7878
 2024/04/13 01:24:06 recvd create request for blog - Title:"blog1"  Content:"this is blog1"  Author:"alice"  PubDate:"01/01/2009"  Tags:"blog"  Tags:"grpc"
@@ -26,7 +27,7 @@ A grpc implementation of blog CRUD APIs
 2024/04/13 01:24:06 Recvd delete for blog ID - d7f3e132-07c7-40a4-904d-44480f30835a
 ```
 
-### Client Logs
+#### Client Logs
 ```
 eshant@Eshants-MacBook-Pro demoBlogServiceInGrpc % go test -v client/main_test.go
 === RUN   Test_main
