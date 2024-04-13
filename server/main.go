@@ -11,7 +11,6 @@ import (
 	"github.com/ezeeyahoo/demoBlogServiceInGrpc/proto"
 	"github.com/google/uuid"
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/reflection"
 )
 
 type stringConst string
@@ -22,7 +21,6 @@ const (
 )
 
 type BlogServer struct {
-	// proto.BlogServicerServer
 	proto.UnimplementedBlogServicerServer
 }
 
@@ -35,7 +33,6 @@ func main() {
 	server := grpc.NewServer()
 
 	proto.RegisterBlogServicerServer(server, &BlogServer{})
-	reflection.Register(server)
 
 	go func() {
 		log.Printf("starting the server at: %+v", listener.Addr())
@@ -123,6 +120,7 @@ func (b *BlogStorage) Update(blogID *string, entry *proto.BlogEntryPost) (*strin
 	return ID, blog, nil
 }
 
+// Get is responsible for fetching blog from data storage
 func (b *BlogStorage) Get(blogID *string) (*BlogEntry, error) {
 	v, ok := b.storage[*blogID]
 	if !ok {
@@ -133,6 +131,7 @@ func (b *BlogStorage) Get(blogID *string) (*BlogEntry, error) {
 
 }
 
+// Delete is responsible for deleting blog from data storage
 func (b *BlogStorage) Delete(blogID *string) string {
 	if _, ok := b.storage[*blogID]; !ok {
 		return "blog ID not found"
@@ -142,6 +141,7 @@ func (b *BlogStorage) Delete(blogID *string) string {
 	return "deleted"
 }
 
+// CreatePost is endoint for CREATE blog
 func (b *BlogServer) CreatePost(ctx context.Context, in *proto.CreateRequest) (*proto.CreateResponse, error) {
 	log.Printf("recvd create request for blog - %+v", in.BlogEntry)
 
@@ -180,6 +180,7 @@ func (b *BlogServer) CreatePost(ctx context.Context, in *proto.CreateRequest) (*
 	}, nil
 }
 
+// GetPost is endoint for GET blog
 func (b *BlogServer) GetPost(ctx context.Context, in *proto.GetRequest) (*proto.GetResponse, error) {
 	log.Printf("recvd GET request for blog ID: %v", in.PostID)
 
@@ -200,11 +201,13 @@ func (b *BlogServer) GetPost(ctx context.Context, in *proto.GetRequest) (*proto.
 	}, nil
 }
 
+// DeletePost is endoint for DELETE blog
 func (b *BlogServer) DeletePost(ctx context.Context, in *proto.DeleteRequest) (*proto.DeleteResponse, error) {
 	log.Printf("Recvd delete for blog ID - %v", in.PostID)
 	return &proto.DeleteResponse{Msg: blogStorage.Delete(&in.PostID)}, nil
 }
 
+// UpdatePost is endoint for PUT blog
 func (b *BlogServer) UpdatePost(ctx context.Context, in *proto.UpdateRequest) (*proto.UpdateResponse, error) {
 	log.Println("Recvd update for ID:", in.PostID)
 
