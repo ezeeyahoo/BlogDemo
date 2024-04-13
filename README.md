@@ -2,15 +2,17 @@
 A grpc implementation of blog CRUD APIs
 
 ## Steps
-## Start the grpc server
+### Start the grpc server
 ### Run from project root folder
-> go mod tidy
-> go run server/main.go
+
+> $go mod tidy
+
+> $go run server/main.go
 
 
 ### Run client tests
 #### Run from project root folder
-> go test -v client/main_test.go
+> $go test -v client/main_test.go
 
 #### Server Logs
 ```
