@@ -38,7 +38,7 @@ message BlogEntryPost {
 }
 
 message CreateRequest {
-    BlogEntryPost BlogEntry = 2;
+    BlogEntryPost BlogEntry = 1;
 }
 
 message GetRequest {
@@ -55,18 +55,18 @@ message DeleteRequest {
 }
 
 message CreateResponse {
-    string PostID = 2;
-    BlogEntryPost BlogEntry = 3;
+    string PostID = 1;
+    BlogEntryPost BlogEntry = 2;
 }
 
 message GetResponse {
-    string PostID = 2;
-    BlogEntryPost BlogEntry = 3;
+    string PostID = 1;
+    BlogEntryPost BlogEntry = 2;
 }
 
 message UpdateResponse {
-    string PostID = 2;
-    BlogEntryPost BlogEntry = 3;
+    string PostID = 1;
+    BlogEntryPost BlogEntry = 2;
 }
 
 message DeleteResponse {
